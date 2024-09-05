@@ -1,0 +1,30 @@
+{
+  "name": "islands-is-land",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:is-land": "esbuild ./src/is-land.js --bundle --outdir=dist --format=esm --minify",
+    "build:polly": "esbuild ./src/polly-entrypoint.js --bundle --outdir=dist --format=esm --minify",
+    "build:preact-cart": "esbuild ./src/preact-cart-island.jsx --jsx-import-source=preact --jsx=automatic --bundle --outdir=dist --format=esm --minify",
+    "build:vue-product": "esbuild ./src/vue-product-island.js --alias:vue=vue/dist/vue.esm-bundler.js --bundle --outdir=dist --format=esm --minify",
+    "build:preact-related-products": "esbuild ./src/preact-related-products-island.jsx --jsx-import-source=preact --jsx=automatic --bundle --outdir=dist --format=esm --minify",
+    "build": "npm run build:polly && npm run build:is-land && npm run build:preact-cart && npm run build:vue-product && npm run build:preact-related-products",
+    "predev": "npm run build",
+    "dev": "concurrently \"cross-env PORT=3001 serve .\" \"npm:mocks\"",
+    "mocks": "polly listen -d ./recordings"
+  },
+  "devDependencies": {
+    "@pollyjs/adapter-fetch": "6.0.6",
+    "@pollyjs/cli": "6.0.6",
+    "@pollyjs/core": "6.0.6",
+    "concurrently": "8.2.2",
+    "esbuild": "0.18.11",
+    "serve": "14.2.1"
+  },
+  "dependencies": {
+    "@11ty/is-land": "4.0.0",
+    "htm": "3.1.1",
+    "preact": "10.15.1",
+    "vue": "3.2.36"
+  }
+}
