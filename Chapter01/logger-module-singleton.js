@@ -28,4 +28,4 @@ class Logger {
   }
 }
 
-export default Object.freeze(new Logger('warn', console));
+export default Object.freeze(new Logger('info', console));

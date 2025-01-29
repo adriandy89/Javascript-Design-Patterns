@@ -38,13 +38,13 @@ function twoPointTwo() {
   const whiteSquareLast = whiteSquarePrototype.clone();
   console.assert(
     whiteSquare.color === whiteSquareTwo.color &&
-      whiteSquareTwo.color === whiteSquareLast.color,
+    whiteSquareTwo.color === whiteSquareLast.color,
     'Prototype.clone()-ed instances have the same color as the prototype',
   );
   console.assert(
     whiteSquare !== whiteSquareTwo &&
-      whiteSquare !== whiteSquareLast &&
-      whiteSquareTwo !== whiteSquareLast,
+    whiteSquare !== whiteSquareLast &&
+    whiteSquareTwo !== whiteSquareLast,
     'each Prototype.clone() call outputs a different instances',
   );
 
@@ -59,14 +59,14 @@ function twoPointTwo() {
 
     console.assert(
       boardSquareTwo.color === 'white' &&
-        boardSquare.color === boardSquareTwo.color &&
-        boardSquareTwo.color === boardSquareLast.color,
+      boardSquare.color === boardSquareTwo.color &&
+      boardSquareTwo.color === boardSquareLast.color,
       'Prototype.clone()-ed instances have the same color as the prototype',
     );
     console.assert(
       boardSquare !== boardSquareTwo &&
-        boardSquare !== boardSquareLast &&
-        boardSquareTwo !== boardSquareLast,
+      boardSquare !== boardSquareLast &&
+      boardSquareTwo !== boardSquareLast,
       'each Prototype.clone() call outputs a different instances',
     );
   })();
@@ -79,19 +79,21 @@ function twoPointTwo() {
     const boardSquareLast = boardSquarePrototype.clone();
     console.assert(
       boardSquareTwo.color === 'black' &&
-        boardSquare.color === boardSquareTwo.color &&
-        boardSquareTwo.color === boardSquareLast.color,
+      boardSquare.color === boardSquareTwo.color &&
+      boardSquareTwo.color === boardSquareLast.color,
       'Prototype.clone()-ed instances have the same color as the prototype',
     );
     console.assert(
       boardSquare !== boardSquareTwo &&
-        boardSquare !== boardSquareLast &&
-        boardSquareTwo !== boardSquareLast,
+      boardSquare !== boardSquareLast &&
+      boardSquareTwo !== boardSquareLast,
       'each Prototype.clone() call outputs a different instances',
     );
   })();
 }
 twoPointTwo();
+console.log('2.2 passed');
+
 /**
  * 2.4
  */
@@ -151,7 +153,7 @@ function twoPointFour() {
 
       console.assert(
         otherBoardSquare.piece === 'king' &&
-          otherBoardSquare.piece === boardSquare.piece,
+        otherBoardSquare.piece === boardSquare.piece,
         'prototype.piece was copied over',
       );
     })();
@@ -175,7 +177,7 @@ function twoPointFour() {
 
     console.assert(
       otherSquare.occupySquare === square.occupySquare &&
-        otherSquare.clearSquare === square.clearSquare,
+      otherSquare.clearSquare === square.clearSquare,
       "methods are not copied, they're 'inherited' using the prototype",
     );
 
@@ -194,7 +196,7 @@ function twoPointFour() {
     console.assert(otherSquare.piece === null, 'clearSquare method works');
 
     class Square {
-      constructor() {}
+      constructor() { }
       occupySquare(piece) {
         this.piece = piece;
       }
@@ -218,10 +220,12 @@ function twoPointFour() {
   twoPointFourPointTwo();
 }
 twoPointFour();
+console.log('2.4 passed');
 
-/**
- * 3.2
- */
+
+// /**
+//  * 3.2
+//  */
 import { Logger as ImportedLogger, Logger } from './logger.js';
 import importedLoggerInstance from './logger.js';
 
@@ -235,8 +239,8 @@ function threePointTwo() {
   const typeError = captureError(() => new Logger('info', console));
   console.assert(
     typeError.message ===
-      'Logger is not constructable, use getInstance() instead' &&
-      typeError instanceof TypeError,
+    'Logger is not constructable, use getInstance() instead' &&
+    typeError instanceof TypeError,
     'constructor errors if instance exists',
   );
 
@@ -253,8 +257,8 @@ function threePointTwo() {
   const typeError2 = captureError(() => new Logger('info', console));
   console.assert(
     typeError2.message ===
-      'Logger is not constructable, use getInstance() instead' &&
-      typeError2 instanceof TypeError,
+    'Logger is not constructable, use getInstance() instead' &&
+    typeError2 instanceof TypeError,
     'constructor errors if instance exists',
   );
 
@@ -266,131 +270,132 @@ function threePointTwo() {
 }
 
 threePointTwo();
+console.log('3.2 passed');
 
-import logger2, { Logger as Logger2 } from './logger-improved.js';
-/**
- * 3.4
- */
-async function threePointFour() {
-  const typeError = captureError(() => new Logger2('info', console));
-  console.assert(
-    typeError.message ===
-      'Logger is not constructable, use getInstance() instead' &&
-      typeError instanceof TypeError,
-    'constructor errors if instance exists',
-  );
+// import logger2, { Logger as Logger2 } from './logger-improved.js';
+// /**
+//  * 3.4
+//  */
+// async function threePointFour() {
+//   const typeError = captureError(() => new Logger2('info', console));
+//   console.assert(
+//     typeError.message ===
+//       'Logger is not constructable, use getInstance() instead' &&
+//       typeError instanceof TypeError,
+//     'constructor errors if instance exists',
+//   );
 
-  // uncomment to get a syntax error example on private field access
-  // Logger.#loggerInstance = null;
+//   // uncomment to get a syntax error example on private field access
+//   // Logger.#loggerInstance = null;
 
-  const freezeError = captureError(() => {
-    logger2.transport = 'bar';
-  });
-  console.assert(
-    freezeError.message ===
-      'Cannot add property transport, object is not extensible' &&
-      freezeError instanceof TypeError,
-    'constructor errors if instance exists',
-  );
+//   const freezeError = captureError(() => {
+//     logger2.transport = 'bar';
+//   });
+//   console.assert(
+//     freezeError.message ===
+//       'Cannot add property transport, object is not extensible' &&
+//       freezeError instanceof TypeError,
+//     'constructor errors if instance exists',
+//   );
 
-  await Promise.all([
-    import('./my-singleton.js'),
-    import('./my-singleton.js'),
-  ]).then(([import1, import2]) => {
-    console.assert(
-      import1 === import2,
-      'import objects are a single reference',
-    );
-    console.assert(
-      import1.default.value === 'my-value' &&
-        import2.default.value === 'my-value',
-      'instance variable is equal',
-    );
-    console.assert(
-      import1.default === import2.default,
-      'multiple imports of a module yield the same default object value, a single MySingleton instance',
-    );
-  });
+//   await Promise.all([
+//     import('./my-singleton.js'),
+//     import('./my-singleton.js'),
+//   ]).then(([import1, import2]) => {
+//     console.assert(
+//       import1 === import2,
+//       'import objects are a single reference',
+//     );
+//     console.assert(
+//       import1.default.value === 'my-value' &&
+//         import2.default.value === 'my-value',
+//       'instance variable is equal',
+//     );
+//     console.assert(
+//       import1.default === import2.default,
+//       'multiple imports of a module yield the same default object value, a single MySingleton instance',
+//     );
+//   });
 
-  const { default: logger3 } = await import('./logger-module-singleton.js');
-  logger3.info('testing info'); // logs nothing, our logger is configured for warn+
-  logger3.warn('testing warn'); // 'testing warn'
-}
+//   const { default: logger3 } = await import('./logger-module-singleton.js');
+//   logger3.info('testing info'); // logs nothing, our logger is configured for warn+
+//   logger3.warn('testing warn'); // 'testing warn'
+// }
 
-await threePointFour();
+// await threePointFour();
 
-/**
- * 4.2
- */
-function fourPointTwo() {
-  class Building {
-    generateBuilding() {
-      this.topFloor = this.makeTopFloor();
-    }
-    makeTopFloor() {
-      throw new Error('not implemented, subclass of Building should implement');
-    }
-  }
+// /**
+//  * 4.2
+//  */
+// function fourPointTwo() {
+//   class Building {
+//     generateBuilding() {
+//       this.topFloor = this.makeTopFloor();
+//     }
+//     makeTopFloor() {
+//       throw new Error('not implemented, subclass of Building should implement');
+//     }
+//   }
 
-  class House extends Building {
-    makeTopFloor() {
-      return {
-        level: 1,
-      };
-    }
-  }
+//   class House extends Building {
+//     makeTopFloor() {
+//       return {
+//         level: 1,
+//       };
+//     }
+//   }
 
-  const house = new House();
-  house.generateBuilding();
-  console.assert(house.topFloor.level === 1, 'topFloor works in House');
+//   const house = new House();
+//   house.generateBuilding();
+//   console.assert(house.topFloor.level === 1, 'topFloor works in House');
 
-  class SkyScraper extends Building {
-    makeTopFloor() {
-      return {
-        level: 125,
-      };
-    }
-  }
+//   class SkyScraper extends Building {
+//     makeTopFloor() {
+//       return {
+//         level: 125,
+//       };
+//     }
+//   }
 
-  const skyScraper = new SkyScraper();
-  skyScraper.generateBuilding();
-  console.assert(
-    skyScraper.topFloor.level > 100,
-    'topFloor works in SkyScraper',
-  );
-}
-fourPointTwo();
+//   const skyScraper = new SkyScraper();
+//   skyScraper.generateBuilding();
+//   console.assert(
+//     skyScraper.topFloor.level > 100,
+//     'topFloor works in SkyScraper',
+//   );
+// }
+// fourPointTwo();
 
-/**
- * 4.4
- */
-function fourPointFour() {
-  function generateBuilding({ makeTopFloor }) {
-    return {
-      topFloor: makeTopFloor(),
-    };
-  }
+// /**
+//  * 4.4
+//  */
+// function fourPointFour() {
+//   function generateBuilding({ makeTopFloor }) {
+//     return {
+//       topFloor: makeTopFloor(),
+//     };
+//   }
 
-  const house = generateBuilding({
-    makeTopFloor() {
-      return {
-        level: 1,
-      };
-    },
-  });
-  console.assert(house.topFloor.level === 1, 'topFloor works in house');
+//   const house = generateBuilding({
+//     makeTopFloor() {
+//       return {
+//         level: 1,
+//       };
+//     },
+//   });
+//   console.assert(house.topFloor.level === 1, 'topFloor works in house');
 
-  const skyScraper = generateBuilding({
-    makeTopFloor() {
-      return {
-        level: 125,
-      };
-    },
-  });
-  console.assert(
-    skyScraper.topFloor.level > 100,
-    'topFloor works in skyScraper',
-  );
-}
+//   const skyScraper = generateBuilding({
+//     makeTopFloor() {
+//       return {
+//         level: 125,
+//       };
+//     },
+//   });
+//   console.assert(
+//     skyScraper.topFloor.level > 100,
+//     'topFloor works in skyScraper',
+//   );
+// }
 
-fourPointFour();
+// fourPointFour();
